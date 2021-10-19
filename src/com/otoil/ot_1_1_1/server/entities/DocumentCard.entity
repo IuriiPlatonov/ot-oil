@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<class-mapping>
+	<class name="com.otoil.ot_1_1_1.server.entities.DocumentCard">
+		<id name="dcmcrdId" type="java.math.BigDecimal" column="DCMCRD_ID" />
+		<id name="name" type="java.lang.String" column="NAME" />
+		<id name="orderNumber" type="java.math.BigDecimal"
+			column="ORDER_NUMBER" />
+		<id name="changeDate" type="java.sql.Timestamp"
+			column="CHANGE_DATE" />
+		<id name="binaryData" type="java.sql.Blob" column="BINARY_DATA" />
+
+		<insert>
+			<sql clause=""></sql>
+		</insert>
+
+		<update>
+			<sql
+				clause="update DOC_BASE.DOCUMENT_CARDS
+    				set NAME=? , 
+    				ORDER_NUMBER=?
+           			where DCMCRD_ID=?">
+				<attribute name="name" />
+				<attribute name="orderNumber" />
+				<attribute name="dcmcrdId" />
+				">
+			</sql>
+		</update>
+
+		<delete>
+			<sql clause=""></sql>
+		</delete>
+
+	</class>
+</class-mapping>

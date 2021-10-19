@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="windows-1251" standalone="no"?>
+<SessionConfig>
+	<properties>
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="connectionString" value="jdbc:oracle:thin:@10.100.22.9:1521:HPDOILDV"/>
+		<property name="user" value="ADMIN"/>
+		<property name="password" value="admin"/>
+	</properties>
+
+	<mapping id="ExampleTask.DocumentCard">
+		<class name="com.otoil.ot_1_1_1.server.entities.DocumentCard"/>
+		<entity name="com/otoil/ot_1_1_1/server/entities/DocumentCard.entity"/>
+		<view name="com/otoil/ot_1_1_1/server/entities/DocumentCard.view"/>
+	</mapping>
+
+</SessionConfig>
