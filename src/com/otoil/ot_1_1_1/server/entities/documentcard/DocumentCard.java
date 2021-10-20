@@ -1,4 +1,4 @@
-package com.otoil.ot_1_1_1.server.entities;
+package com.otoil.ot_1_1_1.server.entities.documentcard;
 
 
 import ru.ep.sdo.Entity;

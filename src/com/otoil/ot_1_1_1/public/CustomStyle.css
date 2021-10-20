@@ -1,37 +1,45 @@
 @charset "UTF-8";
 
-.mainPanel{
-  position: absolute; 
-  top: 2%;
-  left: 20%;
+.verticalPanel {
+	margin: 40px 20px 70px;
+
+
+}
+
+.horizontalPanel {
+	position: absolute;
+	width: 90%;
 }
 
 .title {
-  top: 3em;
-  left: 50%;
-  font-size: 2em;
-  font-weight: bold;
-  color: #0080ff;
-  margin: 40px 0px 70px;
-  text-align: center;
+	top: 3em;
+	left: 40px;
+	font-size: 2em;
+	font-weight: bold;
+	color: #0080ff;
+	margin: 40px 20% 70px;
 }
 
-.table{
-  color: white;
+.table {
+	color: white;
 }
 
-.firstColumn{
-  background-color: #00376f;
+.firstColumn {
+	background-color: #00376f;
 }
 
-.secondColumn{
-  background-color: #0057ae;
+.secondColumn {
+	background-color: #0057ae;
 }
 
-.thirdColumn{
-  background-color: #0080ff;
+.thirdColumn {
+	background-color: #0080ff;
 }
 
-.fourthColumn{
-  background-color: #93c9ff;
+.fourthColumn {
+	background-color: #93c9ff;
+}
+
+.firstDetailColumn {
+	background-color: #0080ff;
 }

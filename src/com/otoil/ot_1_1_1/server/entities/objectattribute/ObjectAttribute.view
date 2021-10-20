@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="Cp1251" ?>
+<query>
+	<select><![CDATA[
+SELECT oa.NAME 
+FROM DOC_BASE.OBJECT_ATTRIBUTES oa 
+GROUP BY oa.NAME
+	]]></select>
+	<order-by></order-by>
+</query>

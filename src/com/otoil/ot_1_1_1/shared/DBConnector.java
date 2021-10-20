@@ -4,21 +4,28 @@ package com.otoil.ot_1_1_1.shared;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import org.fusesource.restygwt.client.DirectRestService;
 
+import com.otoil.ot_1_1_1.client.dto.AttributeName;
 import com.otoil.ot_1_1_1.client.dto.RequestDocumentCardBean;
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
+import javax.ws.rs.core.MediaType;
 
-
-public interface DBConnector extends DirectRestService
+@Produces("application/json")
+public interface DBConnector
 {
 
     @GET
-    @Produces("application/json")
+    @Path("/documentCard/")
     List<ResponseDocumentCardBean> getDocumentCard();
 
     @PUT
-    @Produces("application/json")
+    @Path("/documentCard/")
     Integer saveDocumentCard(RequestDocumentCardBean request);
+    
+    @GET
+    @Path("/attributeName/")
+    List<AttributeName> getObjectAttribute();
 }

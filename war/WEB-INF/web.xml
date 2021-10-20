@@ -11,10 +11,10 @@
 			<param-name>jersey.config.server.provider.packages</param-name>
 			<param-value>com.otoil.ot_1_1_1.server</param-value>
 		</init-param>
-		<init-param>
+<!-- 		<init-param>
 			<param-name>jersey.config.server.provider.classnames</param-name>
 			<param-value>org.glassfish.jersey.media.multipart.MultiPartFeature</param-value>
-		</init-param>
+		</init-param> -->
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>restServlet</servlet-name>

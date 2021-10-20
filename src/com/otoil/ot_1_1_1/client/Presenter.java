@@ -1,6 +1,7 @@
 package com.otoil.ot_1_1_1.client;
 
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.fusesource.restygwt.client.Defaults;
@@ -16,6 +17,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.otoil.ot_1_1_1.client.dto.AttributeName;
 import com.otoil.ot_1_1_1.client.dto.RequestDocumentCardBean;
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
 import com.otoil.ot_1_1_1.client.impl.ExampleViewImpl;
@@ -49,13 +51,13 @@ public class Presenter
                 public void onSuccess(Method method,
                     List<ResponseDocumentCardBean> response)
                 {
-                    view.addDataToTable(response);
+                    view.addDataToDocCardTable(response);
                 }
 
                 @Override
                 public void onFailure(Method method, Throwable exception)
                 {
-                    throw new RuntimeException("Call failed");
+                    Window.alert(exception.toString());
 
                 }
             });
@@ -110,6 +112,24 @@ public class Presenter
             }
 
         });
+        model.getObjectAttribute(new MethodCallback<List<AttributeName>>()
+        {
+
+            @Override
+            public void onFailure(Method method, Throwable exception)
+            {
+                Window.alert("Call details failed" + exception.getMessage());
+
+            }
+
+            @Override
+            public void onSuccess(Method method, List<AttributeName> response)
+            {
+                view.addDataToDetailTable(response);
+                Window.alert(Arrays.toString(response.toArray()));
+            }
+
+        });
     }
 
     private void swapLabelToTextBox(int rowIndex, int columnIndex,
@@ -160,7 +180,7 @@ public class Presenter
                 @Override
                 public void onSuccess(Method method, Integer response)
                 {
-                    Window.alert("Save ".concat("" + response).concat(" doc"));
+                    Window.alert("Save ".concat("2" + response).concat(" doc"));
                 }
 
                 @Override
