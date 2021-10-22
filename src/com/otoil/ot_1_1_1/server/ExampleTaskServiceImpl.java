@@ -1,29 +1,23 @@
 package com.otoil.ot_1_1_1.server;
 
 
-import java.awt.image.BufferedImage;
-import java.io.InputStream;
 import java.math.BigDecimal;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.ws.rs.Path;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 
-
-import com.google.gwt.user.server.Base64Utils;
 import com.otoil.ot_1_1_1.client.dto.AttributeNameBean;
 import com.otoil.ot_1_1_1.client.dto.RequestDocumentCardBean;
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
 import com.otoil.ot_1_1_1.server.entities.documentcard.DocCard;
 import com.otoil.ot_1_1_1.server.entities.objectattribute.ObjectAttribute;
-import com.otoil.ot_1_1_1.shared.DBConnector;
+import com.otoil.ot_1_1_1.shared.ExampleTaskService;
 
 import lombok.SneakyThrows;
 import ru.ep.sdo.Session;
@@ -35,9 +29,10 @@ import ru.ot.gwt.sdo.server.beans.BeanConverter;
 
 
 @Path("/")
-public class DBConnectorImpl implements DBConnector
+public class ExampleTaskServiceImpl implements ExampleTaskService
 {
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<ResponseDocumentCardBean> getDocumentCard()
     {
@@ -47,30 +42,29 @@ public class DBConnectorImpl implements DBConnector
         XMLListModel listModel = session.getListModel("ExampleTask.DocCard");
 
         Iterator<DocCard> iterator = listModel.iterator();
-        
+
         List<ResponseDocumentCardBean> list = new ArrayList<>();
-        while (iterator.hasNext()) {
+        while (iterator.hasNext())
+        {
             DocCard doc = iterator.next();
-            
-            list.add(new ResponseDocumentCardBean(
-                doc.getDcmcrdId().toString(),
-                doc.getName(),
-                doc.getOrderNumber().toString(),
+
+            list.add(new ResponseDocumentCardBean(doc.getDcmcrdId().toString(),
+                doc.getName(), doc.getOrderNumber().toString(),
                 new Date(doc.getChangeDate().getNanos()),
-                doc.getIcon() != null ?  convertBlob(doc.getIcon()) : ""));
+                doc.getIcon() != null ? convertBlob(doc.getIcon()) : ""));
         }
         return list;
-       // return BeanConverter.load(listModel, DocCard.converter()).join();
-
     }
+
     @SneakyThrows
-    private String convertBlob(SDOBlob blob) {
-       
+    private String convertBlob(SDOBlob blob)
+    {
+
         byte[] bytes = IOUtils.toByteArray(blob.openStream());
-        
-        String base64 =Base64.encodeBase64String(bytes); 
-        base64 = "data:image/png;base64,"+base64;
-        
+
+        String base64 = Base64.encodeBase64String(bytes);
+        base64 = "data:image/png;base64," + base64;
+
         return base64;
     }
 

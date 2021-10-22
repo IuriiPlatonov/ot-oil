@@ -13,8 +13,6 @@ import java.sql.Timestamp;
 
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
 
-import java.sql.Blob;
-
 
 @Xml(name = "ROW")
 public class DocCard extends Entity

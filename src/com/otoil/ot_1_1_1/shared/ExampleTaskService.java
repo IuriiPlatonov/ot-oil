@@ -16,18 +16,21 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/api")
 @Produces(MediaType.APPLICATION_JSON)
-public interface DBConnector extends DirectRestService
+public interface ExampleTaskService extends DirectRestService
 {
 
     @GET
     @Path("/documentCard/")
+    @Produces(MediaType.APPLICATION_JSON)
     List<ResponseDocumentCardBean> getDocumentCard();
 
     @PUT
     @Path("/documentCard/")
+    @Produces(MediaType.APPLICATION_JSON)
     Boolean saveDocumentCard(RequestDocumentCardBean request);
 
     @GET
     @Path("/attributeName/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     List<AttributeNameBean> getObjectAttribute(@PathParam("id") String id);
 }

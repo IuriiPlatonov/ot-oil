@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.otoil.ot_1_1_1.client.ExampleView;
 import com.otoil.ot_1_1_1.client.dto.AttributeNameBean;
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
-import com.otoil.ot_1_1_1.client.i18n.LocalizedFields;
+import com.otoil.ot_1_1_1.client.i18n.ExampleTaskConstant;
 
 
 public class ExampleViewImpl implements ExampleView
@@ -27,16 +27,17 @@ public class ExampleViewImpl implements ExampleView
     private VerticalPanel verticalPanelForDetail = new VerticalPanel();
     private HorizontalPanel horizontalPanel = new HorizontalPanel();
     private FlexTable documentCardTable = new FlexTable();
-    private LocalizedFields localizedFields = GWT.create(LocalizedFields.class);
+    private ExampleTaskConstant constant = GWT
+        .create(ExampleTaskConstant.class);
 
     private FlexTable detailTable = new FlexTable();
 
     public void createViews()
     {
-        documentCardTable.setText(0, 0, localizedFields.name());
-        documentCardTable.setText(0, 1, localizedFields.orderedNumber());
-        documentCardTable.setText(0, 2, localizedFields.changeDate());
-        documentCardTable.setText(0, 3, localizedFields.image());
+        documentCardTable.setText(0, 0, constant.name());
+        documentCardTable.setText(0, 1, constant.orderedNumber());
+        documentCardTable.setText(0, 2, constant.changeDate());
+        documentCardTable.setText(0, 3, constant.image());
 
         verticalPanelForDoc.addStyleName("verticalPanel");
         verticalPanelForDetail.addStyleName("detailsTable");
@@ -56,8 +57,8 @@ public class ExampleViewImpl implements ExampleView
         detailTable.getColumnFormatter().addStyleName(0, "firstDetailColumn");
         detailTable.getColumnFormatter().addStyleName(1, "secondDetailColumn");
 
-        titleDocumentCardsTable.setText("Document cards table");
-        titleDetailsTable.setText("Detail");
+        titleDocumentCardsTable.setText(constant.docCardTable());
+        titleDetailsTable.setText(constant.detail());
 
         verticalPanelForDoc.add(titleDocumentCardsTable);
         verticalPanelForDoc.add(documentCardTable);
@@ -79,23 +80,21 @@ public class ExampleViewImpl implements ExampleView
 
             int row = documentCardTable.getRowCount();
 
-            Button saveButton = new Button("save");
+            Button saveButton = new Button(constant.save());
             saveButton.setVisible(false);
 
             Label id = new Label(documentDataList.get(i).getDcmcrdId());
             id.setVisible(false);
 
             Image image = new Image(documentDataList.get(i).getBinaryData());
-               
-            
+
             documentCardTable.setWidget(row, 0,
                 new Label(documentDataList.get(i).getName()));
             documentCardTable.setWidget(row, 1,
                 new Label(documentDataList.get(i).getOrderNumber()));
             documentCardTable.setWidget(row, 2,
                 new Label(documentDataList.get(i).getChangeDate().toString()));
-            documentCardTable.setWidget(row, 3,
-                image);
+            documentCardTable.setWidget(row, 3, image);
             documentCardTable.setWidget(row, 4, saveButton);
             documentCardTable.setWidget(row, 5, id);
         }
@@ -107,8 +106,8 @@ public class ExampleViewImpl implements ExampleView
     {
 
         detailTable.removeAllRows();
-        detailTable.setText(0, 0, "Attributs name:");
-        detailTable.setText(0, 1, "Values:");
+        detailTable.setText(0, 0, constant.attributesName());
+        detailTable.setText(0, 1, constant.values());
 
         for (int i = 0; i < detailList.size(); i++)
         {
