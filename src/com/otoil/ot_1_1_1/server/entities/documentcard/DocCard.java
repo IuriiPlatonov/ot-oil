@@ -2,10 +2,12 @@ package com.otoil.ot_1_1_1.server.entities.documentcard;
 
 
 import ru.ep.sdo.Entity;
+import ru.ep.sdo.annotations.Handler;
 import ru.ep.sdo.annotations.Xml;
+import ru.ep.sdo.handlers.SDOBlobFieldHandler;
+import ru.ep.sdo.lob.blob.SDOBlob;
 import ru.ot.gwt.sdo.server.beans.BeanConverter;
 
-import java.awt.geom.Area;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -15,14 +17,14 @@ import java.sql.Blob;
 
 
 @Xml(name = "ROW")
-public class DocumentCard extends Entity
+public class DocCard extends Entity
 {
 
     public static final String PROPERTYNAME_DCMCRD_ID = "dcmcrdId";
     public static final String PROPERTYNAME_NAME = "name";
     public static final String PROPERTYNAME_ORDER_NUMBER = "orderNumber";
     public static final String PROPERTYNAME_CHANGE_DATE = "changeDate";
-    public static final String PROPERTYNAME_BINARY_DATA = "binaryData";
+    public static final String PROPERTYNAME_BINARY_DATA = "icon";
 
     @Xml(name = "DCMCRD_ID")
     private BigDecimal dcmcrdId;
@@ -36,8 +38,9 @@ public class DocumentCard extends Entity
     @Xml(name = "CHANGE_DATE")
     private Timestamp changeDate;
 
-    @Xml(name = "BINARY_DATA")
-    private Blob binaryData;
+    @Handler(cls = SDOBlobFieldHandler.class)
+    @Xml(name = "ICON")
+    private SDOBlob icon;
 
     public BigDecimal getDcmcrdId()
     {
@@ -87,21 +90,22 @@ public class DocumentCard extends Entity
         firePropertyChange(PROPERTYNAME_CHANGE_DATE, oldValue, changeDate);
     }
 
-    public Blob getBinaryData()
+    public SDOBlob getIcon()
     {
-        return binaryData;
+        return icon;
     }
 
-    public void setBinaryData(Blob binaryData)
+    public void setIcon(SDOBlob icon)
     {
-        Blob oldValue = this.binaryData;
-        this.binaryData = binaryData;
-        firePropertyChange(PROPERTYNAME_BINARY_DATA, oldValue, binaryData);
+        SDOBlob oldValue = this.icon;
+        this.icon = icon;
+        firePropertyChange(PROPERTYNAME_BINARY_DATA, oldValue, icon);
     }
 
-    public static BeanConverter<DocumentCard, ResponseDocumentCardBean> converter()
+    public static BeanConverter<DocCard, ResponseDocumentCardBean> converter()
     {
-        return new BeanConverter<>(DocumentCard.class, ResponseDocumentCardBean.class);
+        return new BeanConverter<>(DocCard.class,
+            ResponseDocumentCardBean.class);
     }
 
 }

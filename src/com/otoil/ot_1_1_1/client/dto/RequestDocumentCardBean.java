@@ -4,37 +4,27 @@ package com.otoil.ot_1_1_1.client.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class RequestDocumentCardBean
 {
-    private final String id;
-    private final String name;
-    private final Integer orderedNumber;
+    private String dcmcrdId;
+    private String name;
+    private String orderNumber;
 
     @JsonCreator
-    public RequestDocumentCardBean(@JsonProperty("id") String id,
+    public RequestDocumentCardBean(@JsonProperty("dcmcrdId") String dcmcrdId,
         @JsonProperty("name") String name,
-        @JsonProperty("orderedNumber") Integer orderedNumber)
+        @JsonProperty("orderNumber") String orderNumber)
     {
-        this.id = id;
+        this.dcmcrdId = dcmcrdId;
         this.name = name;
-        this.orderedNumber = orderedNumber;
-
+        this.orderNumber = orderNumber;
     }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public Integer getOrderedNumber()
-    {
-        return orderedNumber;
-    }
-
 }

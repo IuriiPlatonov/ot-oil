@@ -1,15 +1,11 @@
 package com.otoil.ot_1_1_1.client;
 
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.fusesource.restygwt.client.Defaults;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
-
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
@@ -17,7 +13,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.otoil.ot_1_1_1.client.dto.AttributeName;
+import com.otoil.ot_1_1_1.client.dto.AttributeNameBean;
 import com.otoil.ot_1_1_1.client.dto.RequestDocumentCardBean;
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
 import com.otoil.ot_1_1_1.client.impl.ExampleViewImpl;
@@ -52,25 +48,32 @@ public class Presenter
                     List<ResponseDocumentCardBean> response)
                 {
                     view.addDataToDocCardTable(response);
+
                 }
 
                 @Override
                 public void onFailure(Method method, Throwable exception)
                 {
                     Window.alert(exception.toString());
-
                 }
             });
+        
+
 
         view.getTable().addClickHandler(event -> {
 
             FlexTable table = view.getTable();
-
+            
             int columnIndex = table.getCellForEvent(event).getCellIndex();
             int rowIndex = table.getCellForEvent(event).getRowIndex();
 
             Widget widget = table.getWidget(rowIndex, columnIndex);
 
+            Label idLabel = (Label) table.getWidget(rowIndex, 5);
+            String id = idLabel.getText();
+            
+            setDetails(id);
+            
             boolean isWidgetAllowedToSwap = widget.getClass() == Label.class
                 && columnIndex != 2;
 
@@ -94,10 +97,6 @@ public class Presenter
 
                 if (secondElementValue.trim().matches("\\d+"))
                 {
-
-                    Label idLabel = (Label) table.getWidget(rowIndex, 5);
-                    String id = idLabel.getText();
-
                     swapTextBoxToLabel(rowIndex, table, firstElementValue,
                         secondElementValue);
 
@@ -112,26 +111,30 @@ public class Presenter
             }
 
         });
-        model.getObjectAttribute(new MethodCallback<List<AttributeName>>()
+
+    }
+
+    private void setDetails(String id) {
+        model.getObjectAttribute(id, new MethodCallback<List<AttributeNameBean>>()
         {
 
             @Override
             public void onFailure(Method method, Throwable exception)
             {
-                Window.alert("Call details failed" + exception.getMessage());
+                Window.alert("Call details failed to id: "+ id + " . Exception: " + exception.getMessage());
 
             }
 
             @Override
-            public void onSuccess(Method method, List<AttributeName> response)
+            public void onSuccess(Method method,
+                List<AttributeNameBean> response)
             {
                 view.addDataToDetailTable(response);
-                Window.alert(Arrays.toString(response.toArray()));
             }
 
         });
     }
-
+    
     private void swapLabelToTextBox(int rowIndex, int columnIndex,
         Widget widget, FlexTable table)
     {
@@ -172,15 +175,14 @@ public class Presenter
     private void saveDocument(String id, String firstElementValue,
         String secondElementValue)
     {
-        model.saveDocumentCard(
-            new RequestDocumentCardBean(id, firstElementValue,
-                Integer.parseInt(secondElementValue.trim())),
-            new MethodCallback<Integer>()
+        model.saveDocumentCard(new RequestDocumentCardBean(id,
+            firstElementValue, secondElementValue.trim()),
+            new MethodCallback<Boolean>()
             {
                 @Override
-                public void onSuccess(Method method, Integer response)
+                public void onSuccess(Method method, Boolean response)
                 {
-                    Window.alert("Save ".concat("2" + response).concat(" doc"));
+                    Window.alert("Save doc");
                 }
 
                 @Override

@@ -1,8 +1,7 @@
 package com.otoil.ot_1_1_1.server.entities.objectattribute;
 
 
-import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
-import com.otoil.ot_1_1_1.server.entities.documentcard.DocumentCard;
+import com.otoil.ot_1_1_1.client.dto.AttributeNameBean;
 
 import ru.ep.sdo.Entity;
 import ru.ep.sdo.annotations.Xml;
@@ -14,9 +13,13 @@ public class ObjectAttribute extends Entity
 {
 
     public static final String PROPERTYNAME_NAME = "name";
+    public static final String PROPERTYNAME_VALUE_STRING = "valueString";
 
     @Xml(name = "NAME")
     private String name;
+
+    @Xml(name = "VALUE_STRING")
+    private String valueString;
 
     public String getName()
     {
@@ -30,9 +33,20 @@ public class ObjectAttribute extends Entity
         firePropertyChange(PROPERTYNAME_NAME, oldValue, name);
     }
 
-    public static BeanConverter<ObjectAttribute, String> converter()
+    public String getValueString()
     {
-        return new BeanConverter<>(ObjectAttribute.class, String.class);
+        return valueString;
     }
 
+    public void setValueString(String valueString)
+    {
+        String oldValue = this.valueString;
+        this.valueString = valueString;
+        firePropertyChange(PROPERTYNAME_VALUE_STRING, oldValue, valueString);
+    }
+
+    public static BeanConverter<ObjectAttribute, AttributeNameBean> converter()
+    {
+        return new BeanConverter<>(ObjectAttribute.class, AttributeNameBean.class);
+    }
 }

@@ -3,10 +3,7 @@ package com.otoil.ot_1_1_1.client.impl;
 
 import java.util.List;
 
-import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.cellview.client.CellList;
-import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -16,7 +13,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.otoil.ot_1_1_1.client.ExampleView;
-import com.otoil.ot_1_1_1.client.dto.AttributeName;
+import com.otoil.ot_1_1_1.client.dto.AttributeNameBean;
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
 import com.otoil.ot_1_1_1.client.i18n.LocalizedFields;
 
@@ -32,8 +29,7 @@ public class ExampleViewImpl implements ExampleView
     private FlexTable documentCardTable = new FlexTable();
     private LocalizedFields localizedFields = GWT.create(LocalizedFields.class);
 
-    private FlexTable detailTable = new FlexTable(); 
-
+    private FlexTable detailTable = new FlexTable();
 
     public void createViews()
     {
@@ -42,40 +38,41 @@ public class ExampleViewImpl implements ExampleView
         documentCardTable.setText(0, 2, localizedFields.changeDate());
         documentCardTable.setText(0, 3, localizedFields.image());
 
-        detailTable.setText(0, 0, "Name                                                             /");
-
-        
         verticalPanelForDoc.addStyleName("verticalPanel");
-        verticalPanelForDetail.addStyleName("verticalPanel");
+        verticalPanelForDetail.addStyleName("detailsTable");
         horizontalPanel.addStyleName("horizontalPanel");
-        
+
         titleDocumentCardsTable.addStyleName("title");
         titleDetailsTable.addStyleName("title");
-        
-        detailTable.addStyleName("table");
+
+        detailTable.addStyleName("detailsTable");
         documentCardTable.addStyleName("table");
-        
+
         documentCardTable.getColumnFormatter().addStyleName(0, "firstColumn");
         documentCardTable.getColumnFormatter().addStyleName(1, "secondColumn");
         documentCardTable.getColumnFormatter().addStyleName(2, "thirdColumn");
         documentCardTable.getColumnFormatter().addStyleName(3, "fourthColumn");
 
         detailTable.getColumnFormatter().addStyleName(0, "firstDetailColumn");
-        
+        detailTable.getColumnFormatter().addStyleName(1, "secondDetailColumn");
+
         titleDocumentCardsTable.setText("Document cards table");
         titleDetailsTable.setText("Detail");
+
         verticalPanelForDoc.add(titleDocumentCardsTable);
         verticalPanelForDoc.add(documentCardTable);
         verticalPanelForDetail.add(titleDetailsTable);
         verticalPanelForDetail.add(detailTable);
-        horizontalPanel.add(verticalPanelForDoc);
 
+        horizontalPanel.add(verticalPanelForDoc);
         horizontalPanel.add(verticalPanelForDetail);
+
         RootPanel.get("resultTable").add(horizontalPanel);
 
     }
 
-    public void addDataToDocCardTable(List<ResponseDocumentCardBean> documentDataList)
+    public void addDataToDocCardTable(
+        List<ResponseDocumentCardBean> documentDataList)
     {
         for (int i = 0; i < documentDataList.size(); i++)
         {
@@ -85,32 +82,45 @@ public class ExampleViewImpl implements ExampleView
             Button saveButton = new Button("save");
             saveButton.setVisible(false);
 
-            Label id = new Label(documentDataList.get(i).getId());
+            Label id = new Label(documentDataList.get(i).getDcmcrdId());
             id.setVisible(false);
 
+            Image image = new Image(documentDataList.get(i).getBinaryData());
+               
+            
             documentCardTable.setWidget(row, 0,
                 new Label(documentDataList.get(i).getName()));
-            documentCardTable.setWidget(row, 1, new Label(
-                Integer.toString(documentDataList.get(i).getOrderedNumber())));
+            documentCardTable.setWidget(row, 1,
+                new Label(documentDataList.get(i).getOrderNumber()));
             documentCardTable.setWidget(row, 2,
                 new Label(documentDataList.get(i).getChangeDate().toString()));
             documentCardTable.setWidget(row, 3,
-                new Image("http://www.tutorialspoint.com/images/gwt-mini.png"));
+                image);
             documentCardTable.setWidget(row, 4, saveButton);
             documentCardTable.setWidget(row, 5, id);
         }
 
     }
-    
+
     @Override
-    public void addDataToDetailTable(List<AttributeName> detailList)
+    public void addDataToDetailTable(List<AttributeNameBean> detailList)
     {
-        // TODO Auto-generated method stub
-        for (int i = 0; i < detailList.size(); i++){
-            detailTable.setWidget(i, 0, new Label(detailList.get(i).getName()));
+
+        detailTable.removeAllRows();
+        detailTable.setText(0, 0, "Attributs name:");
+        detailTable.setText(0, 1, "Values:");
+
+        for (int i = 0; i < detailList.size(); i++)
+        {
+
+            int row = detailTable.getRowCount();
+
+            detailTable.setWidget(row, 0,
+                new Label(detailList.get(i).getName()));
+            detailTable.setWidget(row, 1,
+                new Label(detailList.get(i).getValueString()));
         }
-        
-        
+
     }
 
     @Override

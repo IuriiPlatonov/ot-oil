@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1251" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <SessionConfig>
 	<properties>
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
@@ -7,6 +7,7 @@
 		<property name="password" value="admin"/>
 	</properties>
 
+
 	<mapping id="ExampleTask.ObjectAttribute">
 		<class name="com.otoil.ot_1_1_1.server.entities.objectattribute.ObjectAttribute"/>
 		<entity name="com/otoil/ot_1_1_1/server/entities/objectattribute/ObjectAttribute.entity"/>
@@ -14,10 +15,10 @@
 	</mapping>
 
 
-	<mapping id="ExampleTask.DocumentCard">
-		<class name="com.otoil.ot_1_1_1.server.entities.documentcard.DocumentCard"/>
-		<entity name="com/otoil/ot_1_1_1/server/entities/documentcard/DocumentCard.entity"/>
-		<view name="com/otoil/ot_1_1_1/server/entities/documentcard/DocumentCard.view"/>
+	<mapping id="ExampleTask.DocCard">
+		<class name="com.otoil.ot_1_1_1.server.entities.documentcard.DocCard"/>
+		<entity name="com/otoil/ot_1_1_1/server/entities/documentcard/DocCard.entity"/>
+		<view name="com/otoil/ot_1_1_1/server/entities/documentcard/DocCard.view"/>
 	</mapping>
 
 </SessionConfig>
