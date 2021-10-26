@@ -20,7 +20,7 @@
 
 	<stylesheet src="CustomStyle.css" />
 
-	<entry-point class='com.otoil.ot_1_1_1.client.Main' />
+	<entry-point class='com.otoil.ot_1_1_1.client.Entry' />
 	<extend-property name="locale" values="ru" />
 
 	<source path='client' />
