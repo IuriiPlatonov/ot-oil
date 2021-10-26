@@ -52,9 +52,7 @@ public class ExampleTaskMainPresenter
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus)
     {
-        this.eventBus = eventBus;
-        //
-        bind();
+        super.start(panel, eventBus);
 
         detailPresenter.start(view.getDetailPanel(), eventBus);
         masterPresenter.start(view.getMasterPanel(), eventBus);

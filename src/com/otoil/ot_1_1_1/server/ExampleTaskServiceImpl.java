@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import javax.ws.rs.Path;
 
@@ -32,12 +33,25 @@ import ru.ot.gwt.sdo.server.beans.BeanConverter;
 public class ExampleTaskServiceImpl implements ExampleTaskService
 {
 
+    private Session getSession()
+    {
+        Properties properties = new Properties();
+        properties.put("user", "ATOLL_SERVICE");
+        properties.put("password", "ATOLL_SERVICE");
+        properties.put("connectionString",
+            "jdbc:oracle:thin:@10.100.22.9:1521:HPDOILDV");
+        properties.put("driverClassName", "oracle.jdbc.driver.OracleDriver");
+        properties.put("databaseType", "ora");
+        Session session = SessionFactory.getInstance().createSessionFromFile(
+            "com/otoil/ot_1_1_1/server/new.session", properties);
+        return session;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public List<ResponseDocumentCardBean> getDocumentCard()
     {
-        Session session = SessionFactory.getInstance().createSessionFromFile(
-            "com/otoil/ot_1_1_1/server/new.session", null);
+        Session session = getSession();
 
         XMLListModel listModel = session.getListModel("ExampleTask.DocCard");
 
@@ -71,9 +85,7 @@ public class ExampleTaskServiceImpl implements ExampleTaskService
     @Override
     public Boolean saveDocumentCard(RequestDocumentCardBean docCard)
     {
-        Session session = SessionFactory.getInstance().createSessionFromFile(
-            "com/otoil/ot_1_1_1/server/new.session", null);
-
+        Session session =getSession();
         XMLListModel listModel = session.getListModel("ExampleTask.DocCard");
 
         listModel.setFilter(new EqualFilter(DocCard.PROPERTYNAME_DCMCRD_ID,
@@ -93,8 +105,7 @@ public class ExampleTaskServiceImpl implements ExampleTaskService
     @Override
     public List<AttributeNameBean> getObjectAttribute(String id)
     {
-        Session session = SessionFactory.getInstance().createSessionFromFile(
-            "com/otoil/ot_1_1_1/server/new.session", null);
+        Session session = getSession();
 
         XMLListModel listModel = session
             .getListModel("ExampleTask.ObjectAttribute");

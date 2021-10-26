@@ -22,7 +22,7 @@ public class ExampleTaskMasterModelImpl implements ExampleTaskMasterModel
     @Override
     public Single<List<ResponseDocumentCardBean>> getDocumentsCard()
     {
-        return service.toSingle(rs -> rs.getDocumentCard());
+        return service.toSingle(ExampleTaskService::getDocumentCard);
     }
 
     @Override
