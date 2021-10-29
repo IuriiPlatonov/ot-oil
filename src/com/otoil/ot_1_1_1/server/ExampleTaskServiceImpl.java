@@ -27,6 +27,9 @@ import ru.ep.sdo.filter.EqualFilter;
 import ru.ep.sdo.list.XMLListModel;
 import ru.ep.sdo.lob.blob.SDOBlob;
 import ru.ot.gwt.sdo.server.beans.BeanConverter;
+import ru.ot.gwt.utils.shared.tree.Tree;
+import ru.ot.gwt.utils.shared.tree.TreeBuilder;
+import ru.ot.gwt.utils.shared.tree.TreeNode;
 
 
 @Path("/")
@@ -85,7 +88,7 @@ public class ExampleTaskServiceImpl implements ExampleTaskService
     @Override
     public Boolean saveDocumentCard(RequestDocumentCardBean docCard)
     {
-        Session session =getSession();
+        Session session = getSession();
         XMLListModel listModel = session.getListModel("ExampleTask.DocCard");
 
         listModel.setFilter(new EqualFilter(DocCard.PROPERTYNAME_DCMCRD_ID,
@@ -116,6 +119,23 @@ public class ExampleTaskServiceImpl implements ExampleTaskService
 
         return BeanConverter.load(listModel, ObjectAttribute.converter())
             .join();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public TreeNode<ResponseDocumentCardBean> loadTree()
+    {
+        Session session = getSession();
+
+        XMLListModel listModel = session.getListModel("ExampleTask.DocCard");
+
+        Iterator<DocCard> iterator = listModel.iterator();
+
+        TreeBuilder<DocCard> treeBuilder = TreeBuilder
+            .fromIterator(DocCard::getDcmcrdId, DocCard::getName, iterator);
+        return Tree.transform(treeBuilder.build(),
+            DocCard.converter()::convert);
+
     }
 
 }

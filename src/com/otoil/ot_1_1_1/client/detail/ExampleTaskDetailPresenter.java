@@ -1,6 +1,7 @@
 package com.otoil.ot_1_1_1.client.detail;
 
 
+import com.otoil.ot_1_1_1.client.ExampleTaskClientFactory;
 import com.otoil.ot_1_1_1.client.event.SendDetailIdEvent;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -16,10 +17,9 @@ public class ExampleTaskDetailPresenter
 
     private final CompositeDisposable subscriptions = new CompositeDisposable();
 
-    public ExampleTaskDetailPresenter(ExampleTaskDetailModel model,
-        ExampleTaskDetailView view)
+    public ExampleTaskDetailPresenter(ExampleTaskClientFactory factory)
     {
-        super(model, view);
+        super(factory.getDetailModel(), factory.getDetailView());
 
     }
 

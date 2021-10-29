@@ -10,10 +10,16 @@
 	<inherits name='ru.ot.mvp.GWT-MVP' />
 	<inherits name='com.intendia.rxgwt2.RxUser' />
 	<inherits name='ru.ot.gwt.utils.GWT-Utils' />
+	<inherits name='ru.ot.gwt.sdo.GWT-SDO' />
+	<inherits name='ru.ot.wevelns.WeVEL-NS' />
+	<inherits name='com.otoil.ot_040_5_0010.OT_040_5_0010' />
+	<inherits name='ru.ot.ot_132_5_0030.OT_132_5_0030' />
+
+
 	<set-configuration-property
 		name='xsiframe.failIfScriptTag' value='FALSE' />
 
-	<!-- <inherits name='ru.ot.gwt.sdo.GWT-SDO' /> -->
+
 	<set-property name="restygwt.encodeDecode.useGwtJackson"
 		value="true" />
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />

@@ -12,6 +12,9 @@ import org.fusesource.restygwt.client.DirectRestService;
 import com.otoil.ot_1_1_1.client.dto.AttributeNameBean;
 import com.otoil.ot_1_1_1.client.dto.RequestDocumentCardBean;
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
+import ru.ot.gwt.utils.shared.tree.TreeNode;
+import ru.ot.wevelns.client.tree.DefaultTreeNode;
+
 import javax.ws.rs.core.MediaType;
 
 @Path("/api")
@@ -33,4 +36,9 @@ public interface ExampleTaskService extends DirectRestService
     @Path("/attributeName/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     List<AttributeNameBean> getObjectAttribute(@PathParam("id") String id);
+    
+    @GET
+    @Path("/tree")
+    @Produces(MediaType.APPLICATION_JSON)
+    TreeNode<ResponseDocumentCardBean> loadTree();
 }
