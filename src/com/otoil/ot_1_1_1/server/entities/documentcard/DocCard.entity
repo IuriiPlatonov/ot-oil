@@ -8,7 +8,9 @@
 			column="ORDER_NUMBER" />
 		<attribute name="changeDate" type="java.sql.Timestamp"
 			column="CHANGE_DATE" />
-		<attribute name="icon" type="ru.ep.sdo.lob.blob.SDOBlob" column="ICON" />
+		<attribute name="dcmcrdDcmcrdId" type="java.math.BigDecimal" column="DCMCRD_DCMCRD_ID" />
+		<attribute name="icon" type="ru.ep.sdo.lob.blob.SDOBlob"
+			column="ICON" />
 
 		<insert>
 			<sql clause=""></sql>

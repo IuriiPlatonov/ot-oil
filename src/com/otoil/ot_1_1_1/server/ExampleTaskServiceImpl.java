@@ -18,6 +18,7 @@ import com.otoil.ot_1_1_1.client.dto.RequestDocumentCardBean;
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
 import com.otoil.ot_1_1_1.server.entities.documentcard.DocCard;
 import com.otoil.ot_1_1_1.server.entities.objectattribute.ObjectAttribute;
+import com.otoil.ot_1_1_1.server.entities.treedoccard.TreeDocCard;
 import com.otoil.ot_1_1_1.shared.ExampleTaskService;
 
 import lombok.SneakyThrows;
@@ -32,7 +33,7 @@ import ru.ot.gwt.utils.shared.tree.TreeBuilder;
 import ru.ot.gwt.utils.shared.tree.TreeNode;
 
 
-@Path("/")
+@Path("/ext")
 public class ExampleTaskServiceImpl implements ExampleTaskService
 {
 
@@ -43,6 +44,7 @@ public class ExampleTaskServiceImpl implements ExampleTaskService
         properties.put("password", "ATOLL_SERVICE");
         properties.put("connectionString",
             "jdbc:oracle:thin:@10.100.22.9:1521:HPDOILDV");
+        // "jdbc:oracle:thin:@185.40.76.81:1521:MPDEV");
         properties.put("driverClassName", "oracle.jdbc.driver.OracleDriver");
         properties.put("databaseType", "ora");
         Session session = SessionFactory.getInstance().createSessionFromFile(
@@ -68,6 +70,7 @@ public class ExampleTaskServiceImpl implements ExampleTaskService
             list.add(new ResponseDocumentCardBean(doc.getDcmcrdId().toString(),
                 doc.getName(), doc.getOrderNumber().toString(),
                 new Date(doc.getChangeDate().getNanos()),
+                doc.getDcmcrdDcmcrdId() != null ?  doc.getDcmcrdDcmcrdId().toString() : "",
                 doc.getIcon() != null ? convertBlob(doc.getIcon()) : ""));
         }
         return list;
@@ -127,14 +130,17 @@ public class ExampleTaskServiceImpl implements ExampleTaskService
     {
         Session session = getSession();
 
-        XMLListModel listModel = session.getListModel("ExampleTask.DocCard");
+        XMLListModel listModel = session
+            .getListModel("ExampleTask.TreeDocCard");
 
-        Iterator<DocCard> iterator = listModel.iterator();
+        Iterator<TreeDocCard> iterator = listModel.iterator();
 
-        TreeBuilder<DocCard> treeBuilder = TreeBuilder
-            .fromIterator(DocCard::getDcmcrdId, DocCard::getName, iterator);
-        return Tree.transform(treeBuilder.build(),
-            DocCard.converter()::convert);
+        TreeBuilder<TreeDocCard> treeBuilder = TreeBuilder.fromIterator(
+            TreeDocCard::getDcmcrdId, TreeDocCard::getDcmcrdDcmcrdId, iterator);
+
+        TreeNode<TreeDocCard> tree = treeBuilder.build();
+
+        return Tree.transform(tree, TreeDocCard.converter()::convert);
 
     }
 

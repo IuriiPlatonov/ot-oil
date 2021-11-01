@@ -7,9 +7,7 @@ import java.util.List;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.cellview.client.ValueContext;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -33,11 +31,8 @@ import io.reactivex.subjects.PublishSubject;
 import ru.ot.wevelns.client.cellview.columns.AbstractDateColumn;
 import ru.ot.wevelns.client.NSTreeNodeDataGrid;
 import ru.ot.wevelns.client.cell.DefaultCell;
-import ru.ot.wevelns.client.text.MaskedDateParserRenderer;
 import ru.ot.wevelns.client.tree.DefaultTreeNode;
 import ru.ot.wevelns.client.tree.TreeDataDisplay;
-
-import static com.otoil.ot_1_1_1.client.utils.BeanPropertyUtils.createBeanProperty;
 
 
 public class ExampleTaskMasterViewImpl extends VerticalPanel
@@ -50,22 +45,22 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
     private static final int ORDER_LABEL_INDEX = 1;
     private static final int DETAIL_BUTTON_INDEX = 4;
 
-    public static final BeanProperty<ResponseDocumentCardBean, String> name = createBeanProperty(
+    public static final BeanProperty<ResponseDocumentCardBean, String> name = BeanProperty.create(
         ResponseDocumentCardBean::getName, ResponseDocumentCardBean::setName);
 
-    public static final BeanProperty<ResponseDocumentCardBean, String> orderedNumber = createBeanProperty(
+    public static final BeanProperty<ResponseDocumentCardBean, String> orderedNumber = BeanProperty.create(
         ResponseDocumentCardBean::getOrderNumber,
         ResponseDocumentCardBean::setOrderNumber);
 
-    public static final BeanProperty<ResponseDocumentCardBean, Date> changeDate = createBeanProperty(
+    public static final BeanProperty<ResponseDocumentCardBean, Date> changeDate = BeanProperty.create(
         ResponseDocumentCardBean::getChangeDate,
         ResponseDocumentCardBean::setChangeDate);
 
-    public static final BeanProperty<ResponseDocumentCardBean, String> image = createBeanProperty(
+    public static final BeanProperty<ResponseDocumentCardBean, String> image = BeanProperty.create(
         ResponseDocumentCardBean::getBinaryData,
         ResponseDocumentCardBean::setBinaryData);
 
-    public static final BeanProperty<ResponseDocumentCardBean, String> dcmcrdId = createBeanProperty(
+    public static final BeanProperty<ResponseDocumentCardBean, String> dcmcrdId = BeanProperty.create(
         ResponseDocumentCardBean::getDcmcrdId,
         ResponseDocumentCardBean::setDcmcrdId);
 
@@ -178,29 +173,29 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
         BeanProperty<ResponseDocumentCardBean, Date> property, String title,
         int width, boolean visible)
     {
-        DateboxCell dateboxCell = new DateboxCell(
-            new MaskedDateParserRenderer())
-        {
-            @Override
-            public void render(Context context, Date value, SafeHtmlBuilder sb)
-            {
-                if (context instanceof ValueContext)
-                {
-                    SafeHtmlBuilder inner = new SafeHtmlBuilder();
-                    super.render(context, value, inner);
-                    sb.append(inner.toSafeHtml());
-                }
-                else
-                {
-                    throw new UnsupportedOperationException(
-                        "Can't define value by context");
-                }
-
-            }
-        };
+//        DateboxCell dateboxCell = new DateboxCell(
+//            new MaskedDateParserRenderer())
+//        {
+//            @Override
+//            public void render(Context context, Date value, SafeHtmlBuilder sb)
+//            {
+//                if (context instanceof ValueContext)
+//                {
+//                    SafeHtmlBuilder inner = new SafeHtmlBuilder();
+//                    super.render(context, value, inner);
+//                    sb.append(inner.toSafeHtml());
+//                }
+//                else
+//                {
+//                    throw new UnsupportedOperationException(
+//                        "Can't define value by context");
+//                }
+//
+//            }
+//        };
 
         AbstractDateColumn<DefaultTreeNode<ResponseDocumentCardBean>, DateboxCell> column = new AbstractDateColumn<DefaultTreeNode<ResponseDocumentCardBean>, DateboxCell>(
-            dateboxCell)
+           new DateboxCell())
         {
             @Override
             public Date getValue(DefaultTreeNode<ResponseDocumentCardBean> x)

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<class-mapping>
+	<class name="com.otoil.ot_1_1_1.server.entities.treedoccard.TreeDocCard">
+		<id name="dcmcrdId" type="java.math.BigDecimal" column="DCMCRD_ID"/>
+		<id name="name" type="java.lang.String" column="NAME"/>
+		<id name="orderNumber" type="java.math.BigDecimal" column="ORDER_NUMBER"/>
+		<id name="changeDate" type="java.sql.Timestamp" column="CHANGE_DATE"/>
+		<id name="dcmcrdDcmcrdId" type="java.math.BigDecimal" column="DCMCRD_DCMCRD_ID"/>
+		<id name="icon" type="java.sql.Blob" column="ICON"/>
+
+		<insert>
+			<sql clause=""></sql>
+		</insert>
+
+		<update>
+			<sql clause=""></sql>
+		</update>
+
+		<delete>
+			<sql clause=""></sql>
+		</delete>
+
+	</class>
+</class-mapping>

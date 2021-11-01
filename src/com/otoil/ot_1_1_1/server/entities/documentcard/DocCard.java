@@ -22,6 +22,7 @@ public class DocCard extends Entity
     public static final String PROPERTYNAME_NAME = "name";
     public static final String PROPERTYNAME_ORDER_NUMBER = "orderNumber";
     public static final String PROPERTYNAME_CHANGE_DATE = "changeDate";
+    public static final String PROPERTYNAME_DCMCRD_DCMCRD_ID = "dcmcrdDcmcrdId";
     public static final String PROPERTYNAME_BINARY_DATA = "icon";
 
     @Xml(name = "DCMCRD_ID")
@@ -36,6 +37,9 @@ public class DocCard extends Entity
     @Xml(name = "CHANGE_DATE")
     private Timestamp changeDate;
 
+    @Xml(name = "DCMCRD_DCMCRD_ID")
+    private BigDecimal dcmcrdDcmcrdId;
+    
     @Handler(cls = SDOBlobFieldHandler.class)
     @Xml(name = "ICON")
     private SDOBlob icon;
@@ -88,6 +92,18 @@ public class DocCard extends Entity
         firePropertyChange(PROPERTYNAME_CHANGE_DATE, oldValue, changeDate);
     }
 
+    public BigDecimal getDcmcrdDcmcrdId()
+    {
+        return dcmcrdDcmcrdId;
+    }
+
+    public void setDcmcrdDcmcrdId(BigDecimal dcmcrdDcmcrdId)
+    {
+        BigDecimal oldValue = this.dcmcrdDcmcrdId;
+        this.dcmcrdDcmcrdId = dcmcrdDcmcrdId;
+        firePropertyChange(PROPERTYNAME_DCMCRD_DCMCRD_ID, oldValue, dcmcrdDcmcrdId);
+    }
+    
     public SDOBlob getIcon()
     {
         return icon;

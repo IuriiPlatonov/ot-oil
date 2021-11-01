@@ -53,9 +53,9 @@ public class ExampleTaskMasterPresenter
     @Override
     public void start(AcceptsOneWidget panel, EventBus eventBus)
     {
-        super.start(panel, eventBus);
         provider.addDataDisplay(view.getTree());
         view.getTree().setSelectionModel(selectionModel);
+        super.start(panel, eventBus);
     }
    
     private void saveDocument(RequestDocumentCardBean cardBean)

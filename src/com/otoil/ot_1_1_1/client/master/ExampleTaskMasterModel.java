@@ -8,7 +8,6 @@ import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
 
 import io.reactivex.Single;
 import ru.ot.mvp.client.presenters.Model;
-import ru.ot.wevelns.client.tree.DefaultTreeNode;
 import ru.ot.gwt.utils.shared.tree.TreeNode;
 
 

@@ -13,11 +13,10 @@ import com.otoil.ot_1_1_1.client.dto.AttributeNameBean;
 import com.otoil.ot_1_1_1.client.dto.RequestDocumentCardBean;
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
 import ru.ot.gwt.utils.shared.tree.TreeNode;
-import ru.ot.wevelns.client.tree.DefaultTreeNode;
 
 import javax.ws.rs.core.MediaType;
 
-@Path("/api")
+@Path("/rest/ext")
 @Produces(MediaType.APPLICATION_JSON)
 public interface ExampleTaskService extends DirectRestService
 {
