@@ -8,6 +8,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -26,11 +27,13 @@ import com.otoil.ot_1_1_1.client.master.ExampleTaskMasterView;
 
 import ru.ot.wevelns.client.cell.datebox.DateboxCell;
 import ru.ot.wevelns.client.cellview.columns.StringColumn;
+import ru.ot.wevelns.client.datagrid.ModelTreeNodeColumn;
 import ru.ot.ot_132_5_0030.client.icon.IconRenderer;
 import io.reactivex.subjects.PublishSubject;
 import ru.ot.wevelns.client.cellview.columns.AbstractDateColumn;
 import ru.ot.wevelns.client.NSTreeNodeDataGrid;
 import ru.ot.wevelns.client.cell.DefaultCell;
+import ru.ot.wevelns.client.cell.SimpleCellRenderer;
 import ru.ot.wevelns.client.tree.DefaultTreeNode;
 import ru.ot.wevelns.client.tree.TreeDataDisplay;
 
@@ -45,30 +48,31 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
     private static final int ORDER_LABEL_INDEX = 1;
     private static final int DETAIL_BUTTON_INDEX = 4;
 
-    public static final BeanProperty<ResponseDocumentCardBean, String> name = BeanProperty.create(
-        ResponseDocumentCardBean::getName, ResponseDocumentCardBean::setName);
+    public static final BeanProperty<ResponseDocumentCardBean, String> name = BeanProperty
+        .create(ResponseDocumentCardBean::getName, (x, y) -> {
+        });
 
-    public static final BeanProperty<ResponseDocumentCardBean, String> orderedNumber = BeanProperty.create(
-        ResponseDocumentCardBean::getOrderNumber,
-        ResponseDocumentCardBean::setOrderNumber);
+    public static final BeanProperty<ResponseDocumentCardBean, String> orderedNumber = BeanProperty
+        .create(ResponseDocumentCardBean::getOrderNumber,
+            ResponseDocumentCardBean::setOrderNumber);
 
-    public static final BeanProperty<ResponseDocumentCardBean, Date> changeDate = BeanProperty.create(
-        ResponseDocumentCardBean::getChangeDate,
-        ResponseDocumentCardBean::setChangeDate);
+    public static final BeanProperty<ResponseDocumentCardBean, Date> changeDate = BeanProperty
+        .create(ResponseDocumentCardBean::getChangeDate,
+            ResponseDocumentCardBean::setChangeDate);
 
-    public static final BeanProperty<ResponseDocumentCardBean, String> image = BeanProperty.create(
-        ResponseDocumentCardBean::getBinaryData,
-        ResponseDocumentCardBean::setBinaryData);
+    public static final BeanProperty<ResponseDocumentCardBean, String> image = BeanProperty
+        .create(ResponseDocumentCardBean::getBinaryData,
+            ResponseDocumentCardBean::setBinaryData);
 
-    public static final BeanProperty<ResponseDocumentCardBean, String> dcmcrdId = BeanProperty.create(
-        ResponseDocumentCardBean::getDcmcrdId,
-        ResponseDocumentCardBean::setDcmcrdId);
+    public static final BeanProperty<ResponseDocumentCardBean, String> dcmcrdId = BeanProperty
+        .create(ResponseDocumentCardBean::getDcmcrdId,
+            ResponseDocumentCardBean::setDcmcrdId);
 
     private final static ExampleTaskConstant CONSTANTS = ExampleTaskConstant.INSTANCE;
     private Label titleDocumentCardsTable = new Label();
     private FlexTable documentCardTable = new FlexTable();
 
-    private NSTreeNodeDataGrid<ResponseDocumentCardBean> treeTable;
+    private NSTreeNodeDataGrid<ResponseDocumentCardBean> treeTable =  new NSTreeNodeDataGrid<ResponseDocumentCardBean>();;
 
     private PublishSubject<RequestDocumentCardBean> requestDocumentCardBeanSubject = PublishSubject
         .create();
@@ -86,8 +90,8 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
         documentCardTable.setText(0, 2, CONSTANTS.changeDate());
         documentCardTable.setText(0, 3, CONSTANTS.image());
 
-        treeTable = createTreeNodeDataGrid();
 
+        createTreeNodeDataGrid();
         titleDocumentCardsTable.addStyleName("title");
         documentCardTable.addStyleName("table");
         this.addStyleName("masterPanel");
@@ -106,22 +110,22 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
         this.add(documentCardTable);
     }
 
-    private NSTreeNodeDataGrid<ResponseDocumentCardBean> createTreeNodeDataGrid()
+    private void createTreeNodeDataGrid()
     {
 
-        NSTreeNodeDataGrid<ResponseDocumentCardBean> result = new NSTreeNodeDataGrid<ResponseDocumentCardBean>();
-        result.setEditing(false);
-        result.setExperimentalRendering(false);
-        result.setSize("100%", "100%");
+       
+        treeTable.setEditing(true);
+        treeTable.setExperimentalRendering(false);
+        treeTable.setSize("100%", "100%");
         addStringColumn(name, CONSTANTS.name(), 200, true);
-        addStringColumn(orderedNumber, CONSTANTS.orderedNumber(), 200, true);
-        addDateColumn(changeDate, CONSTANTS.changeDate(), 200, true);
-        addImageColumn(image, CONSTANTS.image(), 200, true);
-        addStringButtonColumn(CONSTANTS.detail(), CONSTANTS.detail(), 200,
-            true);
-        addStringButtonColumn(CONSTANTS.save(), CONSTANTS.save(), 200, true);
-        addStringColumn(dcmcrdId, "id", 0, false);
-        return result;
+        // addStringColumn(orderedNumber, CONSTANTS.orderedNumber(), 200, true);
+  //      addDateColumn(changeDate, CONSTANTS.changeDate(), 200, true);
+        // addImageColumn(image, CONSTANTS.image(), 200, true);
+        // addStringButtonColumn(CONSTANTS.detail(), CONSTANTS.detail(), 200,
+        // true);
+        // addStringButtonColumn(CONSTANTS.save(), CONSTANTS.save(), 200, true);
+        // addStringColumn(dcmcrdId, "id", 0, false);
+   
     }
 
     private void addStringColumn(
@@ -130,17 +134,20 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
     {
         Column<DefaultTreeNode<ResponseDocumentCardBean>, String> column = new StringColumn<DefaultTreeNode<ResponseDocumentCardBean>>()
         {
+
             @Override
             public String getValue(
                 DefaultTreeNode<ResponseDocumentCardBean> object)
             {
+
                 return property.get(object.getValue());
             }
         };
-        column.setSortable(true);
-        treeTable.addColumn(column, title);
-        treeTable.setColumnWidth(column, width, Unit.PX);
-        treeTable.setColumnVisible(column, visible);
+        // column.setSortable(true);
+
+              treeTable.addColumn(column, title);
+        treeTable.setColumnWidth(column, width + "px");
+        // treeTable.setColumnVisible(column, visible);
 
     }
 
@@ -173,29 +180,29 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
         BeanProperty<ResponseDocumentCardBean, Date> property, String title,
         int width, boolean visible)
     {
-//        DateboxCell dateboxCell = new DateboxCell(
-//            new MaskedDateParserRenderer())
-//        {
-//            @Override
-//            public void render(Context context, Date value, SafeHtmlBuilder sb)
-//            {
-//                if (context instanceof ValueContext)
-//                {
-//                    SafeHtmlBuilder inner = new SafeHtmlBuilder();
-//                    super.render(context, value, inner);
-//                    sb.append(inner.toSafeHtml());
-//                }
-//                else
-//                {
-//                    throw new UnsupportedOperationException(
-//                        "Can't define value by context");
-//                }
-//
-//            }
-//        };
+        // DateboxCell dateboxCell = new DateboxCell(
+        // new MaskedDateParserRenderer())
+        // {
+        // @Override
+        // public void render(Context context, Date value, SafeHtmlBuilder sb)
+        // {
+        // if (context instanceof ValueContext)
+        // {
+        // SafeHtmlBuilder inner = new SafeHtmlBuilder();
+        // super.render(context, value, inner);
+        // sb.append(inner.toSafeHtml());
+        // }
+        // else
+        // {
+        // throw new UnsupportedOperationException(
+        // "Can't define value by context");
+        // }
+        //
+        // }
+        // };
 
         AbstractDateColumn<DefaultTreeNode<ResponseDocumentCardBean>, DateboxCell> column = new AbstractDateColumn<DefaultTreeNode<ResponseDocumentCardBean>, DateboxCell>(
-           new DateboxCell())
+            new DateboxCell())
         {
             @Override
             public Date getValue(DefaultTreeNode<ResponseDocumentCardBean> x)
@@ -252,7 +259,7 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
             Image image = new Image(documentDataList.get(i).getBinaryData());
 
             documentCardTable.setWidget(row, 0,
-                new Label(documentDataList.get(i).getName()));
+                new Label(documentDataList.get(i).getDocName()));
             documentCardTable.setWidget(row, 1,
                 new Label(documentDataList.get(i).getOrderNumber()));
             documentCardTable.setWidget(row, 2,

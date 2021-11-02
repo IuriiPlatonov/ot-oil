@@ -5,14 +5,13 @@ package com.otoil.ot_1_1_1.client.master;
 import org.fusesource.restygwt.client.Defaults;
 
 import com.google.gwt.event.shared.EventBus;
-
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.otoil.ot_1_1_1.client.ExampleTaskClientFactory;
 import com.otoil.ot_1_1_1.client.dto.RequestDocumentCardBean;
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
 import com.otoil.ot_1_1_1.client.event.GetDetailIdEvent;
-
 
 import lombok.Setter;
 import ru.ot.mvp.client.presenters.AbstractPresenter;
@@ -28,7 +27,7 @@ public class ExampleTaskMasterPresenter
 
     private FetchedTreeProviderAdapter<ResponseDocumentCardBean> provider = new FetchedTreeProviderAdapter<>();
     private final SingleSelectionModel<DefaultTreeNode<ResponseDocumentCardBean>> selectionModel = new SingleSelectionModel<>();
-    
+
     public ExampleTaskMasterPresenter(ExampleTaskClientFactory factory)
     {
         super(factory.getMasterModel(), factory.getMasterView());
@@ -39,11 +38,12 @@ public class ExampleTaskMasterPresenter
     {
         Defaults.setServiceRoot(
             com.google.gwt.core.client.GWT.getHostPageBaseURL());
-
-        model.load().subscribe((treeData) -> {
-            provider.setTree(treeData);
-            provider.refresh();
-        });
+        model.loadTree().subscribe(tree -> Window.alert(tree.toString()));
+        model.loadTree().doOnError(tree -> Window.alert(tree.toString()));
+//        model.loadTree().subscribe((treeData) -> {
+//            provider.setTree(treeData);
+//            provider.refresh();
+//        });
         model.getDocumentsCard().subscribe(view::addDataToDocCardTable);
         view.getSaveSubject().subscribe(this::saveDocument);
         view.getDetailId().subscribe(this::createGetDetailIdEvent);
@@ -56,8 +56,9 @@ public class ExampleTaskMasterPresenter
         provider.addDataDisplay(view.getTree());
         view.getTree().setSelectionModel(selectionModel);
         super.start(panel, eventBus);
+
     }
-   
+
     private void saveDocument(RequestDocumentCardBean cardBean)
     {
         model.saveDocumentCard(cardBean).subscribe();

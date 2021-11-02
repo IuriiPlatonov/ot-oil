@@ -16,7 +16,7 @@ import ru.ot.gwt.utils.shared.tree.TreeNode;
 
 import javax.ws.rs.core.MediaType;
 
-@Path("/rest/ext")
+@Path("/exampletask/rest/ext")
 @Produces(MediaType.APPLICATION_JSON)
 public interface ExampleTaskService extends DirectRestService
 {

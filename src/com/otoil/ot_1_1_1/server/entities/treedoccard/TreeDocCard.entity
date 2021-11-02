@@ -2,7 +2,7 @@
 <class-mapping>
 	<class name="com.otoil.ot_1_1_1.server.entities.treedoccard.TreeDocCard">
 		<id name="dcmcrdId" type="java.math.BigDecimal" column="DCMCRD_ID"/>
-		<id name="name" type="java.lang.String" column="NAME"/>
+		<id name="docName" type="java.lang.String" column="NAME"/>
 		<id name="orderNumber" type="java.math.BigDecimal" column="ORDER_NUMBER"/>
 		<id name="changeDate" type="java.sql.Timestamp" column="CHANGE_DATE"/>
 		<id name="dcmcrdDcmcrdId" type="java.math.BigDecimal" column="DCMCRD_DCMCRD_ID"/>

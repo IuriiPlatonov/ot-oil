@@ -33,7 +33,7 @@ public class ExampleTaskMasterModelImpl implements ExampleTaskMasterModel
     }
 
     @Override
-    public Single<TreeNode<ResponseDocumentCardBean>> load()
+    public Single<TreeNode<ResponseDocumentCardBean>> loadTree()
     {
         return service.toSingle(rs -> rs.loadTree());
     }

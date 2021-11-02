@@ -16,7 +16,7 @@ public class TreeDocCard extends Entity
 {
 
 	public static final String PROPERTYNAME_DCMCRD_ID = "dcmcrdId";
-	public static final String PROPERTYNAME_NAME = "name";
+	public static final String PROPERTYNAME_NAME = "docName";
 	public static final String PROPERTYNAME_ORDER_NUMBER = "orderNumber";
 	public static final String PROPERTYNAME_CHANGE_DATE = "changeDate";
 	public static final String PROPERTYNAME_DCMCRD_DCMCRD_ID = "dcmcrdDcmcrdId";
@@ -26,7 +26,7 @@ public class TreeDocCard extends Entity
 	private BigDecimal dcmcrdId;
 
 	@Xml(name = "NAME")
-	private String name;
+	private String docName;
 
 	@Xml(name = "ORDER_NUMBER")
 	private BigDecimal orderNumber;
@@ -53,16 +53,16 @@ public class TreeDocCard extends Entity
 		firePropertyChange(PROPERTYNAME_DCMCRD_ID, oldValue, dcmcrdId);
 	}
 
-	public String getName()
+	public String getDocName()
 	{
-		return name;
+		return docName;
 	}
 
-	public void setName(String name)
+	public void setDocName(String docName)
 	{
-		String oldValue = this.name;
-		this.name = name;
-		firePropertyChange(PROPERTYNAME_NAME, oldValue, name);
+		String oldValue = this.docName;
+		this.docName = docName;
+		firePropertyChange(PROPERTYNAME_NAME, oldValue, docName);
 	}
 
 	public BigDecimal getOrderNumber()

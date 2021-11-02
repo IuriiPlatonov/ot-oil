@@ -135,13 +135,23 @@ public class ExampleTaskServiceImpl implements ExampleTaskService
 
         Iterator<TreeDocCard> iterator = listModel.iterator();
 
-        TreeBuilder<TreeDocCard> treeBuilder = TreeBuilder.fromIterator(
-            TreeDocCard::getDcmcrdId, TreeDocCard::getDcmcrdDcmcrdId, iterator);
+        List<ResponseDocumentCardBean> list = TreeDocCard.converter().convert(listModel);
+        
+        Iterator<ResponseDocumentCardBean> newIt = list.iterator();
 
-        TreeNode<TreeDocCard> tree = treeBuilder.build();
+        TreeBuilder<ResponseDocumentCardBean> treeBuilder = TreeBuilder.fromIterator(
+            ResponseDocumentCardBean::getDcmcrdId, ResponseDocumentCardBean::getDcmcrdDcmcrdId, newIt);
 
-        return Tree.transform(tree, TreeDocCard.converter()::convert);
+        TreeNode<ResponseDocumentCardBean> tree = treeBuilder.build();
 
+        
+//        TreeBuilder<TreeDocCard> treeBuilder = TreeBuilder.fromIterator(
+//            TreeDocCard::getDcmcrdId, TreeDocCard::getDcmcrdDcmcrdId, iterator);
+//
+//        TreeNode<TreeDocCard> tree = treeBuilder.build();
+//
+//        return Tree.transform(tree, TreeDocCard.converter()::convert);
+return tree;
     }
 
 }
