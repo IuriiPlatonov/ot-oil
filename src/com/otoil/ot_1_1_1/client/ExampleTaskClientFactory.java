@@ -21,5 +21,4 @@ public interface ExampleTaskClientFactory extends ClientFactory
     
     ExampleTaskDetailView getDetailView();
 
-   // Session getSession();
 }

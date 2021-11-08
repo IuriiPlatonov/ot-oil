@@ -7,8 +7,8 @@ import com.otoil.ot_1_1_1.client.dto.RequestDocumentCardBean;
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
 
 import io.reactivex.Single;
-import ru.ot.mvp.client.presenters.Model;
 import ru.ot.gwt.utils.shared.tree.TreeNode;
+import ru.ot.mvp.client.presenters.Model;
 
 
 public interface ExampleTaskMasterModel extends Model

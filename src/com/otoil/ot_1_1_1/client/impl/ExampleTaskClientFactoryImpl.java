@@ -13,13 +13,13 @@ import com.otoil.ot_1_1_1.client.master.ExampleTaskMasterView;
 import com.otoil.ot_1_1_1.client.master.impl.ExampleTaskMasterModelImpl;
 import com.otoil.ot_1_1_1.client.master.impl.ExampleTaskMasterViewImpl;
 
-
 import ru.ot.mvp.client.history.AsyncPlaceController;
 
 
-public class ExampleTaskClientFactoryImpl 
-        implements ExampleTaskClientFactory
+public enum ExampleTaskClientFactoryImpl implements ExampleTaskClientFactory
 {
+
+    INSTANCE;
 
     @Override
     public ExampleTaskMainModel getMainModel()
@@ -42,7 +42,7 @@ public class ExampleTaskClientFactoryImpl
     @Override
     public ExampleTaskMasterView getMasterView()
     {
-        return new ExampleTaskMasterViewImpl();
+        return ExampleTaskMasterViewImpl.getInstance();
     }
 
     @Override
@@ -50,30 +50,17 @@ public class ExampleTaskClientFactoryImpl
     {
         return new ExampleTaskDetailViewImpl();
     }
-    
+
     @Override
     public ExampleTaskDetailModel getDetailModel()
     {
         return new ExampleTaskDetailModelImpl();
     }
 
-//    @Override
-//    public Session getSession()
-//    {
-//        if (session == null)
-//        {
-//            session = SessionFactory.getInstance().createSession();
-//        }
-//        return session;
-//    }
-
     @Override
     public AsyncPlaceController getPlaceController()
     {
-        // TODO Auto-generated method stub
         return null;
     }
-
- 
 
 }

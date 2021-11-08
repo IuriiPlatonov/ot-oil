@@ -4,10 +4,6 @@ package com.otoil.ot_1_1_1.client.master;
 
 import org.fusesource.restygwt.client.Defaults;
 
-import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.view.client.SingleSelectionModel;
 import com.otoil.ot_1_1_1.client.ExampleTaskClientFactory;
 import com.otoil.ot_1_1_1.client.dto.RequestDocumentCardBean;
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
@@ -15,9 +11,7 @@ import com.otoil.ot_1_1_1.client.event.GetDetailIdEvent;
 
 import lombok.Setter;
 import ru.ot.mvp.client.presenters.AbstractPresenter;
-
 import ru.ot.ot_132_5_0030.client.rest.helpers.tree.FetchedTreeProviderAdapter;
-import ru.ot.wevelns.client.tree.DefaultTreeNode;
 
 
 @Setter
@@ -26,8 +20,7 @@ public class ExampleTaskMasterPresenter
 {
 
     private FetchedTreeProviderAdapter<ResponseDocumentCardBean> provider = new FetchedTreeProviderAdapter<>();
-    private final SingleSelectionModel<DefaultTreeNode<ResponseDocumentCardBean>> selectionModel = new SingleSelectionModel<>();
-
+  
     public ExampleTaskMasterPresenter(ExampleTaskClientFactory factory)
     {
         super(factory.getMasterModel(), factory.getMasterView());
@@ -36,26 +29,19 @@ public class ExampleTaskMasterPresenter
     @Override
     public void bind()
     {
+        provider.addDataDisplay(view.getTree());
+
+
         Defaults.setServiceRoot(
             com.google.gwt.core.client.GWT.getHostPageBaseURL());
-        model.loadTree().subscribe(tree -> Window.alert(tree.toString()));
-        model.loadTree().doOnError(tree -> Window.alert(tree.toString()));
-//        model.loadTree().subscribe((treeData) -> {
-//            provider.setTree(treeData);
-//            provider.refresh();
-//        });
-        model.getDocumentsCard().subscribe(view::addDataToDocCardTable);
-        view.getSaveSubject().subscribe(this::saveDocument);
-        view.getDetailId().subscribe(this::createGetDetailIdEvent);
 
-    }
-
-    @Override
-    public void start(AcceptsOneWidget panel, EventBus eventBus)
-    {
-        provider.addDataDisplay(view.getTree());
-        view.getTree().setSelectionModel(selectionModel);
-        super.start(panel, eventBus);
+     
+        model.loadTree().subscribe((treeData) -> {
+            provider.setTree(treeData);
+            provider.refresh();
+        });
+        view.getTreeDetailSubject().subscribe(this::createGetDetailIdEvent);
+        view.getTreeSaveSubject().subscribe(this::saveDocument);
 
     }
 

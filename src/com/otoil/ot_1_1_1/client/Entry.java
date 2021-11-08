@@ -10,14 +10,18 @@ import com.otoil.ot_1_1_1.client.impl.ExampleTaskClientFactoryImpl;
 public class Entry implements EntryPoint
 {
     private ExampleTaskMainPresenter presenter;
+    private EventBus eventBus;
+
+    public Entry()
+    {
+        eventBus = new SimpleEventBus();
+        ExampleTaskClientFactory factory = ExampleTaskClientFactoryImpl.INSTANCE;
+        presenter = new ExampleTaskMainPresenter(factory);
+    }
 
     @Override
     public void onModuleLoad()
     {
-        EventBus eventBus = new SimpleEventBus();
-
-        presenter = new ExampleTaskMainPresenter(new ExampleTaskClientFactoryImpl());
         presenter.start(null, eventBus);
-
     }
 }

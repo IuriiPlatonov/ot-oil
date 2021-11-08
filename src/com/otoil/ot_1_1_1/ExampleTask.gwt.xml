@@ -5,22 +5,19 @@
 <module rename-to='exampletask'>
 	<!-- Inherit the core Web Toolkit stuff. -->
 	<inherits name='com.google.gwt.user.User' />
-	<inherits name="com.google.gwt.json.JSON" />
-	<inherits name="org.fusesource.restygwt.RestyGWT" />
+	<!-- <inherits name="com.google.gwt.json.JSON" /> -->
+	<!-- <inherits name="org.fusesource.restygwt.RestyGWT" /> -->
 	<inherits name='ru.ot.mvp.GWT-MVP' />
-	<inherits name='com.intendia.rxgwt2.RxUser' />
+	<!-- <inherits name='com.intendia.rxgwt2.RxUser' /> -->
 	<inherits name='ru.ot.gwt.utils.GWT-Utils' />
 	<inherits name='ru.ot.gwt.sdo.GWT-SDO' />
 	<inherits name='ru.ot.wevelns.WeVEL-NS' />
 	<inherits name='ru.ot.ot_132_5_0030.OT_132_5_0030' />
- 	<inherits name="ru.ot.gwt.exception.GWT-Exception" /> 
-
+	<inherits name="ru.ot.gwt.exception.GWT-Exception" />
+	<inherits name="com.google.gwt.i18n.I18N" />
 	<set-configuration-property
 		name='xsiframe.failIfScriptTag' value='FALSE' />
 
-
-	<set-property name="restygwt.encodeDecode.useGwtJackson"
-		value="true" />
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
 
 	<stylesheet src="CustomStyle.css" />

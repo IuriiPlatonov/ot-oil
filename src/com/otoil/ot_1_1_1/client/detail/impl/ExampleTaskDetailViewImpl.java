@@ -11,13 +11,13 @@ import com.otoil.ot_1_1_1.client.detail.ExampleTaskDetailView;
 import com.otoil.ot_1_1_1.client.dto.AttributeNameBean;
 import com.otoil.ot_1_1_1.client.i18n.ExampleTaskConstant;
 
+import ru.ot.wevelns.client.NSBlock;
+
 
 public class ExampleTaskDetailViewImpl extends VerticalPanel
         implements ExampleTaskDetailView
 {
 
-    private Label titleDetailsTable = new Label();
-    private VerticalPanel verticalPanelForDetail = new VerticalPanel();
     private final static ExampleTaskConstant CONSTANTS = ExampleTaskConstant.INSTANCE;
     private FlexTable detailTable = new FlexTable();
 
@@ -29,24 +29,22 @@ public class ExampleTaskDetailViewImpl extends VerticalPanel
 
     public ExampleTaskDetailViewImpl()
     {
-        onLoad();
+        init();
     }
 
-    public void onLoad()
+    public void init()
     {
-        verticalPanelForDetail.addStyleName("detailsTable");
-
-        titleDetailsTable.addStyleName("title");
+        NSBlock block = new NSBlock(CONSTANTS.detail());
+        block.setSize("600px", "1000px");
 
         detailTable.addStyleName("detailsTable");
-
         detailTable.getColumnFormatter().addStyleName(0, "firstDetailColumn");
         detailTable.getColumnFormatter().addStyleName(1, "secondDetailColumn");
+        detailTable.setWidth("100%");
 
-        titleDetailsTable.setText(CONSTANTS.detail());
+        block.setWidget(detailTable);
 
-        this.add(titleDetailsTable);
-        this.add(detailTable);
+        this.add(block);
     }
 
     @Override
@@ -62,8 +60,7 @@ public class ExampleTaskDetailViewImpl extends VerticalPanel
 
             int row = detailTable.getRowCount();
 
-            detailTable.setWidget(row, 0,
-                new Label(list.get(i).getName()));
+            detailTable.setWidget(row, 0, new Label(list.get(i).getName()));
             detailTable.setWidget(row, 1,
                 new Label(list.get(i).getValueString()));
         }

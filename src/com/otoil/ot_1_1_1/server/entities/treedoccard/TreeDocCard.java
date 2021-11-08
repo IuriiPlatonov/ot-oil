@@ -1,15 +1,16 @@
 package com.otoil.ot_1_1_1.server.entities.treedoccard;
 
-import ru.ep.sdo.Entity;
-import ru.ep.sdo.annotations.Xml;
-import ru.ot.gwt.sdo.server.beans.BeanConverter;
-
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
 
-import java.sql.Blob;
+import ru.ep.sdo.Entity;
+import ru.ep.sdo.annotations.Handler;
+import ru.ep.sdo.annotations.Xml;
+import ru.ep.sdo.handlers.SDOBlobFieldHandler;
+import ru.ep.sdo.lob.blob.SDOBlob;
+import ru.ot.gwt.sdo.server.beans.BeanConverter;
 
 @Xml(name = "ROW")
 public class TreeDocCard extends Entity
@@ -37,8 +38,9 @@ public class TreeDocCard extends Entity
 	@Xml(name = "DCMCRD_DCMCRD_ID")
 	private BigDecimal dcmcrdDcmcrdId;
 
-	@Xml(name = "ICON")
-	private Blob icon;
+    @Handler(cls = SDOBlobFieldHandler.class)
+    @Xml(name = "ICON")
+    private SDOBlob icon;
 
 
 	public BigDecimal getDcmcrdId()
@@ -101,14 +103,14 @@ public class TreeDocCard extends Entity
 		firePropertyChange(PROPERTYNAME_DCMCRD_DCMCRD_ID, oldValue, dcmcrdDcmcrdId);
 	}
 
-	public Blob getIcon()
+	public SDOBlob getIcon()
 	{
 		return icon;
 	}
 
-	public void setIcon(Blob icon)
+	public void setIcon(SDOBlob icon)
 	{
-		Blob oldValue = this.icon;
+	    SDOBlob oldValue = this.icon;
 		this.icon = icon;
 		firePropertyChange(PROPERTYNAME_ICON, oldValue, icon);
 	}
@@ -116,6 +118,6 @@ public class TreeDocCard extends Entity
     public static BeanConverter<TreeDocCard, ResponseDocumentCardBean> converter()
     {
         return new BeanConverter<>(TreeDocCard.class,
-            ResponseDocumentCardBean.class);
+                ResponseDocumentCardBean.class);
     }
 }

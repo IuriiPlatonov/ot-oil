@@ -1,12 +1,11 @@
 package com.otoil.ot_1_1_1.client.impl;
 
 
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.AcceptsOneWidget;
-
 import com.otoil.ot_1_1_1.client.ExampleTaskMainView;
 
 
@@ -19,13 +18,12 @@ public class ExampleTaskMainViewImpl implements ExampleTaskMainView
 
     public ExampleTaskMainViewImpl()
     {
-        onLoad();
+        init();
     }
 
-    private void onLoad()
+    private void init()
     {
         horizontalPanel.addStyleName("horizontalPanel");
-
         horizontalPanel.add(masterPanel);
         horizontalPanel.add(detailPanel);
 
@@ -41,7 +39,7 @@ public class ExampleTaskMainViewImpl implements ExampleTaskMainView
     @Override
     public Widget asWidget()
     {
-        return RootPanel.get();
+        return null;
     }
 
     @Override

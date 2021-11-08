@@ -28,7 +28,6 @@ import ru.ep.sdo.filter.EqualFilter;
 import ru.ep.sdo.list.XMLListModel;
 import ru.ep.sdo.lob.blob.SDOBlob;
 import ru.ot.gwt.sdo.server.beans.BeanConverter;
-import ru.ot.gwt.utils.shared.tree.Tree;
 import ru.ot.gwt.utils.shared.tree.TreeBuilder;
 import ru.ot.gwt.utils.shared.tree.TreeNode;
 
@@ -69,7 +68,7 @@ public class ExampleTaskServiceImpl implements ExampleTaskService
 
             list.add(new ResponseDocumentCardBean(doc.getDcmcrdId().toString(),
                 doc.getName(), doc.getOrderNumber().toString(),
-                new Date(doc.getChangeDate().getNanos()),
+                new Date(doc.getChangeDate().getTime()),
                 doc.getDcmcrdDcmcrdId() != null ?  doc.getDcmcrdDcmcrdId().toString() : "",
                 doc.getIcon() != null ? convertBlob(doc.getIcon()) : ""));
         }
@@ -88,21 +87,22 @@ public class ExampleTaskServiceImpl implements ExampleTaskService
         return base64;
     }
 
+
+    
     @Override
     public Boolean saveDocumentCard(RequestDocumentCardBean docCard)
     {
         Session session = getSession();
-        XMLListModel listModel = session.getListModel("ExampleTask.DocCard");
+        XMLListModel listModel = session.getListModel("ExampleTask.TreeDocCard");
 
-        listModel.setFilter(new EqualFilter(DocCard.PROPERTYNAME_DCMCRD_ID,
+        listModel.setFilter(new EqualFilter(TreeDocCard.PROPERTYNAME_DCMCRD_ID,
             docCard.getDcmcrdId()));
 
         listModel.fetchAll();
 
-        DocCard bo = (DocCard) listModel.get(0);
-        bo.setName(docCard.getName());
+        TreeDocCard bo = (TreeDocCard) listModel.get(0);
+        bo.setDocName(docCard.getName());
         bo.setOrderNumber(new BigDecimal(docCard.getOrderNumber()));
-
         session.commit();
 
         return true;
@@ -133,14 +133,29 @@ public class ExampleTaskServiceImpl implements ExampleTaskService
         XMLListModel listModel = session
             .getListModel("ExampleTask.TreeDocCard");
 
-        Iterator<TreeDocCard> iterator = listModel.iterator();
+       Iterator<TreeDocCard> iterator = listModel.iterator();
+       List<ResponseDocumentCardBean> list = new ArrayList<>();
+       
+       while (iterator.hasNext())
+       {
+           TreeDocCard doc = iterator.next();
 
-        List<ResponseDocumentCardBean> list = TreeDocCard.converter().convert(listModel);
+           list.add(ResponseDocumentCardBean.builder()
+               .dcmcrdId(doc.getDcmcrdId().toString())
+               .docName(doc.getDocName())
+               .orderNumber(doc.getOrderNumber().toString())
+               .changeDate(new Date(doc.getChangeDate().getTime()))
+               .dcmcrdDcmcrdId(doc.getDcmcrdDcmcrdId() != null ?  doc.getDcmcrdDcmcrdId().toString() : null)
+               .binaryData(doc.getIcon() != null ? convertBlob(doc.getIcon()) : null)
+               .build());
+       }
+       
+      //  List<ResponseDocumentCardBean> list = TreeDocCard.converter().convert(listModel);
         
-        Iterator<ResponseDocumentCardBean> newIt = list.iterator();
+        Iterator<ResponseDocumentCardBean> listIterator = list.iterator();
 
         TreeBuilder<ResponseDocumentCardBean> treeBuilder = TreeBuilder.fromIterator(
-            ResponseDocumentCardBean::getDcmcrdId, ResponseDocumentCardBean::getDcmcrdDcmcrdId, newIt);
+            ResponseDocumentCardBean::getDcmcrdId, ResponseDocumentCardBean::getDcmcrdDcmcrdId, listIterator);
 
         TreeNode<ResponseDocumentCardBean> tree = treeBuilder.build();
 
@@ -149,9 +164,9 @@ public class ExampleTaskServiceImpl implements ExampleTaskService
 //            TreeDocCard::getDcmcrdId, TreeDocCard::getDcmcrdDcmcrdId, iterator);
 //
 //        TreeNode<TreeDocCard> tree = treeBuilder.build();
-//
-//        return Tree.transform(tree, TreeDocCard.converter()::convert);
-return tree;
+//        
+//         return Tree.transform(tree, TreeDocCard.converter()::convert);
+        return tree;
     }
 
 }
