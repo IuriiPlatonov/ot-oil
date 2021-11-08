@@ -42,7 +42,7 @@ public enum ExampleTaskClientFactoryImpl implements ExampleTaskClientFactory
     @Override
     public ExampleTaskMasterView getMasterView()
     {
-        return ExampleTaskMasterViewImpl.getInstance();
+        return new ExampleTaskMasterViewImpl();
     }
 
     @Override

@@ -19,10 +19,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ResponseDocumentCardBean extends DefaultTreeNamedBean
 {
-    private String dcmcrdId;
-    private String docName;
+    private String id;
+    private String name;
     private String orderNumber;
     private Date changeDate;
-    private String dcmcrdDcmcrdId;
+    private String parent;
     private String binaryData;
 }

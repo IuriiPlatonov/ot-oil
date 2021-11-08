@@ -13,8 +13,6 @@ public class ExampleTaskDetailPresenter
         extends AbstractPresenter<ExampleTaskDetailModel, ExampleTaskDetailView>
 {
 
-    // private EventBus eventBus;
-
     private final CompositeDisposable subscriptions = new CompositeDisposable();
 
     public ExampleTaskDetailPresenter(ExampleTaskClientFactory factory)

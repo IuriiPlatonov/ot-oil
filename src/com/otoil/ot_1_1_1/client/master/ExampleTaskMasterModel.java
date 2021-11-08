@@ -16,6 +16,6 @@ public interface ExampleTaskMasterModel extends Model
     Single<List<ResponseDocumentCardBean>> getDocumentsCard();
 
     Single<Boolean> saveDocumentCard(RequestDocumentCardBean request);
-    
+
     Single<TreeNode<ResponseDocumentCardBean>> loadTree();
 }

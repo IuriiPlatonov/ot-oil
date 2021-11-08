@@ -12,10 +12,7 @@ import ru.ot.wevelns.client.tree.TreeDataDisplay;
 
 public interface ExampleTaskMasterView extends IsWidget
 {
- //   void addDataToDocCardTable(List<ResponseDocumentCardBean> documentDataList);
- //   PublishSubject<RequestDocumentCardBean> getSaveSubject(); 
- //   PublishSubject<String> getDetailId(); 
     TreeDataDisplay<DefaultTreeNode<ResponseDocumentCardBean>> getTree();
-    PublishSubject<String> getTreeDetailSubject(); 
-    PublishSubject<RequestDocumentCardBean> getTreeSaveSubject(); 
+
+    PublishSubject<RequestDocumentCardBean> getTreeSaveSubject();
 }

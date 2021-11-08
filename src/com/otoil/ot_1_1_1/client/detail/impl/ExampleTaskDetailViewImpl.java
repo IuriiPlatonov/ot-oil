@@ -35,7 +35,8 @@ public class ExampleTaskDetailViewImpl extends VerticalPanel
     public void init()
     {
         NSBlock block = new NSBlock(CONSTANTS.detail());
-        block.setSize("600px", "1000px");
+
+        block.setSize("50vw", "100vh");
 
         detailTable.addStyleName("detailsTable");
         detailTable.getColumnFormatter().addStyleName(0, "firstDetailColumn");

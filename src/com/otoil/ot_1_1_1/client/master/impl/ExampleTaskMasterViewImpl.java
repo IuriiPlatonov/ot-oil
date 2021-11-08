@@ -13,8 +13,6 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.view.client.NoSelectionModel;
-import com.google.gwt.view.client.SelectionChangeEvent;
 import com.otoil.ot_1_1_1.client.dto.RequestDocumentCardBean;
 import com.otoil.ot_1_1_1.client.dto.ResponseDocumentCardBean;
 import com.otoil.ot_1_1_1.client.i18n.ExampleTaskConstant;
@@ -32,14 +30,12 @@ import ru.ot.wevelns.client.tree.TreeDataDisplay;
 
 
 public class ExampleTaskMasterViewImpl extends VerticalPanel
-        implements ExampleTaskMasterView, SelectionChangeEvent.Handler
+        implements ExampleTaskMasterView
 {
 
-    private static ExampleTaskMasterViewImpl INSTANCE;
-
     public static final BeanProperty<ResponseDocumentCardBean, String> name = BeanProperty
-        .create(ResponseDocumentCardBean::getDocName,
-            ResponseDocumentCardBean::setDocName);
+        .create(ResponseDocumentCardBean::getName,
+            ResponseDocumentCardBean::setName);
 
     public static final BeanProperty<ResponseDocumentCardBean, String> orderedNumber = BeanProperty
         .create(ResponseDocumentCardBean::getOrderNumber,
@@ -53,34 +49,16 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
         .create(ResponseDocumentCardBean::getBinaryData,
             ResponseDocumentCardBean::setBinaryData);
 
-    public static final BeanProperty<ResponseDocumentCardBean, String> dcmcrdId = BeanProperty
-        .create(ResponseDocumentCardBean::getDcmcrdId,
-            ResponseDocumentCardBean::setDcmcrdId);
-
     private final static ExampleTaskConstant CONSTANTS = ExampleTaskConstant.INSTANCE;
 
     private NSTreeNodeDataGrid<ResponseDocumentCardBean> treeTable = new NSTreeNodeDataGrid<ResponseDocumentCardBean>();;
 
-    private PublishSubject<String> treeDetailSubject = PublishSubject.create();
     private PublishSubject<RequestDocumentCardBean> treeSaveSubject = PublishSubject
         .create();
 
-    private NoSelectionModel<DefaultTreeNode<ResponseDocumentCardBean>> selectionModel = new NoSelectionModel<>();
-
-    private int columnNumber = 0;
-
-    private ExampleTaskMasterViewImpl()
+    public ExampleTaskMasterViewImpl()
     {
         init();
-    }
-
-    public static ExampleTaskMasterView getInstance()
-    {
-        if (INSTANCE == null)
-        {
-            INSTANCE = new ExampleTaskMasterViewImpl();
-        }
-        return INSTANCE;
     }
 
     public void init()
@@ -88,7 +66,7 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
         initTreeNodeDataGrid();
 
         NSBlock block = new NSBlock(CONSTANTS.docCardTable());
-        block.setSize("600px", "1000px");
+        block.setSize("50vw", "100vh");
         block.setWidget(treeTable);
 
         this.add(block);
@@ -99,18 +77,12 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
     {
 
         treeTable.setEditing(true);
-        treeTable.setSize("100%", "100%");
-        treeTable.setFocus(true);
-        
-        
+
         addStringColumn(name, CONSTANTS.name(), 200, true);
         addStringColumn(orderedNumber, CONSTANTS.orderedNumber(), 60, true);
         addDateColumn(changeDate, CONSTANTS.changeDate(), 100, true);
         addImageColumn(image, CONSTANTS.image(), 45, true);
-        addStringButtonColumn(CONSTANTS.detail(), CONSTANTS.detail(), 90, true);
 
-        treeTable.setSelectionModel(selectionModel);
-        selectionModel.addSelectionChangeHandler(this);
     }
 
     private void addStringColumn(
@@ -130,7 +102,7 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
         column.setFieldUpdater((index, node, value) -> {
             property.set(node.getValue(), value);
             treeSaveSubject.onNext(new RequestDocumentCardBean(
-                node.getValue().getDcmcrdId(), node.getValue().getDocName(),
+                node.getValue().getId(), node.getValue().getName(),
                 node.getValue().getOrderNumber()));
         });
 
@@ -200,24 +172,6 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
         treeTable.setColumnVisible(column, visible);
     }
 
-    private void addStringButtonColumn(String buttonName, String title,
-        int width, boolean visible)
-    {
-        Column<DefaultTreeNode<ResponseDocumentCardBean>, String> column = new StringColumn<DefaultTreeNode<ResponseDocumentCardBean>>()
-        {
-            @Override
-            public String getValue(
-                DefaultTreeNode<ResponseDocumentCardBean> object)
-            {
-                return buttonName;
-            }
-        };
-        column.setSortable(true);
-        treeTable.addColumn(column, title);
-        treeTable.setColumnWidth(column, width, Unit.PX);
-        treeTable.setColumnVisible(column, visible);
-    }
-
     @Override
     public TreeDataDisplay<DefaultTreeNode<ResponseDocumentCardBean>> getTree()
     {
@@ -225,27 +179,9 @@ public class ExampleTaskMasterViewImpl extends VerticalPanel
     }
 
     @Override
-    public PublishSubject<String> getTreeDetailSubject()
-    {
-        return treeDetailSubject;
-    }
-
-    @Override
     public Widget asWidget()
     {
         return this;
-    }
-
-    @Override
-    public void onSelectionChange(SelectionChangeEvent event)
-    {
-        treeTable.addCellPreviewHandler(e -> columnNumber = e.getColumn());
-
-        if (columnNumber == 4)
-        {
-            treeDetailSubject.onNext(selectionModel.getLastSelectedObject()
-                .getValue().getDcmcrdId());
-        }
     }
 
     @Override
